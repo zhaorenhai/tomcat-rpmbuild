@@ -1,0 +1,16 @@
+[Unit]                                                                                                                      
+Description=Tomcat  
+After=syslog.target network.target remote-fs.target nss-lookup.target  
+   
+[Service]  
+Type=forking  
+EnvironmentFile=-/etc/sysconfig/tomcat
+ExecStart=/usr/share/tomcat/bin/startup.sh &>/dev/null
+ExecReload=/bin/kill -s HUP $MAINPID  
+ExecStop=/usr/share/tomcat/bin/shutdown.sh &>/dev/null  
+PrivateTmp=true 
+User=tomcat
+Group=tomcat
+   
+[Install]  
+WantedBy=multi-user.target
